@@ -4,7 +4,7 @@
   --------------------------------------------------------------------------------------
 */
 const getList = async () => {
-  let url = 'http://127.0.0.1:5000/produtos';
+  let url = 'http://127.0.0.1:5000/contatos';
   fetch(url, {
     method: 'get',
   })
@@ -36,7 +36,7 @@ const postItem = async (inputProduct, inputQuantity, inputPrice) => {
   formData.append('quantidade', inputQuantity);
   formData.append('valor', inputPrice);
 
-  let url = 'http://127.0.0.1:5000/produto';
+  let url = 'http://127.0.0.1:5000/contato';
   fetch(url, {
     method: 'post',
     body: formData
@@ -91,7 +91,7 @@ const removeElement = () => {
 */
 const deleteItem = (item) => {
   console.log(item)
-  let url = 'http://127.0.0.1:5000/produto?nome=' + item;
+  let url = 'http://127.0.0.1:5000/contato?nome=' + item;
   fetch(url, {
     method: 'delete'
   })
