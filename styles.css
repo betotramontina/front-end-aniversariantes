@@ -5,7 +5,7 @@ li {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: rgb(225, 222, 199);
+    background-color: rgb(255, 255, 255);
 }
 
 header {
@@ -16,13 +16,15 @@ header {
 }
 
 .title {
-    color: white;
+    color: #e6e7e8;
     width: 100%;
-    background-color: rgb(35, 32, 24);
+    background-color:#0f8e59;
     display: inline-block;
-    padding: 2px 0px;
+    padding: 0px 0px;
     position: sticky;
+    padding-left: 95px;
     top: 0px;
+    text-align: left;
 }
 
 .banner {
@@ -36,7 +38,7 @@ header {
 }
 
 .newItem {
-    background-color: rgb(225, 222, 199);
+    background-color: #e6e7e8;
     padding: 30px 40px;
     color: white;
     display: flex;
@@ -52,7 +54,7 @@ header {
 #newInput {
     margin: 0;
     border: 1px solid rgb(35, 32, 24);
-    width: 25%;
+    width: 30%;
     padding: 10px;
     font-size: 16px;
 }
@@ -60,7 +62,7 @@ header {
 #newQuantity {
     margin: 0;
     border: 1px solid rgb(35, 32, 24);
-    width: 8%;
+    width: 15%;
     padding: 10px;
     font-size: 16px;
 }
@@ -68,7 +70,7 @@ header {
 #newPrice {
     margin: 0;
     border: 1px solid rgb(35, 32, 24);
-    width: 5%;
+    width: 15%;
     padding: 10px;
     font-size: 16px;
 }
@@ -95,6 +97,7 @@ header {
     padding: 0;
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .close:hover {
@@ -117,7 +120,7 @@ td {
 
 table{
     background-color: white;
-    width: 50%;
+    width: 66%;
 }
 
 tr:nth-child(odd){
@@ -125,7 +128,19 @@ tr:nth-child(odd){
 }
 
 th:nth-child(1){
-    width: 80%;
+    width: 47%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 30%; /* Ajusta a largura da segunda coluna */
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 30%; /* Ajusta a largura da terceira coluna */
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 30%; /* Ajusta a largura da terceira coluna */
 }
 
 tr:hover {
