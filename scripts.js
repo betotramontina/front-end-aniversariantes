@@ -111,15 +111,29 @@ const newItem = () => {
   let inputQuantity = document.getElementById("newQuantity").value;
   let inputPrice = document.getElementById("newPrice").value;
 
+  // Validação para o nome do produto
   if (inputProduct === '') {
     alert("Escreva o nome de um item!");
-  } else if (isNaN(inputQuantity) || isNaN(inputPrice)) {
-    alert("Quantidade e valor precisam ser números!");
-  } else {
-    insertList(inputProduct, inputQuantity, inputPrice)
-    postItem(inputProduct, inputQuantity, inputPrice)
-    alert("Item adicionado!")
+  } 
+  // Validação para a quantidade ser um número
+  else if (isNaN(inputQuantity)) {
+    alert("Quantidade precisa ser um número!");
+  } 
+  // Validação para o preço ser uma data no formato DD-MM-AAAA
+  else if (!validateDate(inputPrice)) {
+    alert("O preço precisa ser uma data no formato DD-MM-AAAA!");
+  } 
+  else {
+    insertList(inputProduct, inputQuantity, inputPrice);
+    postItem(inputProduct, inputQuantity, inputPrice);
+    alert("Item adicionado!");
   }
+}
+
+// Função para validar o formato de data DD-MM-AAAA
+const validateDate = (date) => {
+  const regex = /^([0-2][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+  return regex.test(date);
 }
 
 /*
