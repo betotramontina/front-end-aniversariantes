@@ -138,6 +138,26 @@ const validateDate = (date) => {
 
 /*
   --------------------------------------------------------------------------------------
+  Função para buscar um contato na base 
+  --------------------------------------------------------------------------------------
+*/
+const searchItem = () => {
+  let nameProduct = document.getElementById("newInputSearch").value;
+
+  let url = 'http://127.0.0.1:5000/contato?nome=' + nameProduct;
+  fetch(url, {
+    method: 'get',
+  })
+    .then((response) => response.json())
+    .then((data) => 
+      {console.log(data)})
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+/*
+  --------------------------------------------------------------------------------------
   Função para inserir items na lista apresentada
   --------------------------------------------------------------------------------------
 */
