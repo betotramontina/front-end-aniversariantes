@@ -78,6 +78,7 @@ header {
 
 .addBtn {
     padding: 9px 10px;
+    margin: 0 5px 0 5px;
     background-color: rgb(35, 32, 24);
     color: white;
     text-align: center;
@@ -113,12 +114,71 @@ td {
     cursor: pointer;
     position: relative;
     padding: 12px 8px 12px 10px;
-    font-size: 18px;
+    font-size: 16px;
     transition: 0.2s;
     text-align: start;
 }
 
-table{
+table {
+    background-color: white;
+    width: 66%;
+}
+
+tr:nth-child(odd){
+    background-color: #eee;
+}
+
+th:nth-child(1){
+    width: 47%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 30%; /* Ajusta a largura da segunda coluna */
+}
+
+th:nth-child(3), td:nth-child(3) {
+    width: 30%; /* Ajusta a largura da terceira coluna */
+}
+
+th:nth-child(4), td:nth-child(4) {
+    width: 30%; /* Ajusta a largura da terceira coluna */
+}
+
+tr:hover {
+    background: rgb(200, 199, 199);
+}
+
+.search {
+    background-color: #e6e7e8;
+    padding: 30px 40px;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+#newInputSearch {
+    margin: 0;
+    border: 1px solid rgb(35, 32, 24);
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.searchTable,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 10px;
+    font-size: 14px;
+    color: black;
+    transition: 0.2s;
+    text-align: start;
+}
+
+.searchtable {
     background-color: white;
     width: 66%;
 }
