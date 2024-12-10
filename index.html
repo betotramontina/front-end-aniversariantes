@@ -22,17 +22,29 @@
         </div>
     </header>
 
-     <!-- Opções para adicionar um novo item -->
-    <section class="newItem">
-        <input type="text" id="newInput" placeholder="Nome">
-        <input type="text" id="newCell" placeholder="Whatsapp">
-        <input type="text" id="newBirthdate" placeholder="Data de nascimento">
-        <button onclick="newItem()" class="addBtn">Adicionar contato</button>
-    </section>
-
-    <section class="newItem">
+    <section class="search">
         <input type="search" id="newInputSearch" placeholder="Buscar contato">
         <button onclick="searchItem()" class="addBtn">Buscar</button>
+            <table class="searchTable">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Whatsapp</th>
+                  <th>Data de Nascimento</th>
+                </tr>
+              </thead>
+              <tbody id="searchTableBody">
+                <!-- Os resultados serão inseridos aqui -->
+              </tbody>
+            </table>
+    </section>
+
+     <!-- Opções para adicionar um novo item -->
+    <section class="newItem">
+        <input type="text" id="newInput" placeholder="Adicionar contato">
+        <input type="text" id="newCell" placeholder="Whatsapp" maxlength="11">
+        <input type="date" id="newBirthdate" placeholder="Data de nascimento">
+        <button onclick="newItem()" class="addBtn">Adicionar contato</button>
     </section>
 
     <!-- Tabela com items existentes -->
