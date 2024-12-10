@@ -10,7 +10,7 @@ const getList = async () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      data.produtos.forEach(item => insertList(item.nome, item.quantidade, item.valor))
+      data.contatos.forEach(item => insertList(item.nome, item.celular, item.data_nascimento))
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -30,11 +30,11 @@ getList()
   Função para colocar um item na lista do servidor via requisição POST
   --------------------------------------------------------------------------------------
 */
-const postItem = async (inputProduct, inputQuantity, inputPrice) => {
+const postItem = async (inputContact, inputCell, inputBirthdate) => {
   const formData = new FormData();
-  formData.append('nome', inputProduct);
-  formData.append('quantidade', inputQuantity);
-  formData.append('valor', inputPrice);
+  formData.append('nome', inputContact);
+  formData.append('celular', inputCell);
+  formData.append('data_nascimento', inputBirthdate);
 
   let url = 'http://127.0.0.1:5000/contato';
   fetch(url, {
@@ -101,39 +101,29 @@ const deleteItem = (item) => {
     });
 }
 
-/*
+/* 
   --------------------------------------------------------------------------------------
   Função para adicionar um novo item com nome, quantidade e valor 
   --------------------------------------------------------------------------------------
 */
 const newItem = () => {
-  let inputProduct = document.getElementById("newInput").value;
-  let inputQuantity = document.getElementById("newQuantity").value;
-  let inputPrice = document.getElementById("newPrice").value;
+  let inputContact = document.getElementById("newInput").value;
+  let inputCell = document.getElementById("newCell").value;
+  let inputBirthdate = document.getElementById("newBirthdate").value;
 
-  // Validação para o nome do produto
-  if (inputProduct === '') {
+  // Validação para garantir que todos os campos estão preenchidos
+  if (inputContact === '') {
     alert("Escreva o nome de um item!");
-  } 
-  // Validação para a quantidade ser um número
-  else if (isNaN(inputQuantity)) {
-    alert("Quantidade precisa ser um número!");
-  } 
-  // Validação para o preço ser uma data no formato DD-MM-AAAA
-  else if (!validateDate(inputPrice)) {
-    alert("O preço precisa ser uma data no formato DD-MM-AAAA!");
-  } 
-  else {
-    insertList(inputProduct, inputQuantity, inputPrice);
-    postItem(inputProduct, inputQuantity, inputPrice);
+  } else if (inputCell === '') {
+    alert("Informe a quantidade!");
+  } else if (inputBirthdate === '') {
+    alert("Informe o preço!");
+  } else {
+    // Se todos os campos estiverem preenchidos, insere o item e faz o POST
+    insertList(inputContact, inputCell, inputBirthdate);
+    postItem(inputContact, inputCell, inputBirthdate);
     alert("Item adicionado!");
   }
-}
-
-// Função para validar o formato de data DD-MM-AAAA
-const validateDate = (date) => {
-  const regex = /^([0-2][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
-  return regex.test(date);
 }
 
 /*
@@ -142,9 +132,9 @@ const validateDate = (date) => {
   --------------------------------------------------------------------------------------
 */
 const searchItem = () => {
-  let nameProduct = document.getElementById("newInputSearch").value;
+  let nameContact = document.getElementById("newInputSearch").value;
 
-  let url = 'http://127.0.0.1:5000/contato?nome=' + nameProduct;
+  let url = 'http://127.0.0.1:5000/contato?nome=' + nameContact;
   fetch(url, {
     method: 'get',
   })
@@ -161,8 +151,8 @@ const searchItem = () => {
   Função para inserir items na lista apresentada
   --------------------------------------------------------------------------------------
 */
-const insertList = (nameProduct, quantity, price) => {
-  var item = [nameProduct, quantity, price]
+const insertList = (nameContact, cell, birthdate) => {
+  var item = [nameContact, cell, birthdate]
   var table = document.getElementById('myTable');
   var row = table.insertRow();
 
@@ -172,8 +162,8 @@ const insertList = (nameProduct, quantity, price) => {
   }
   insertButton(row.insertCell(-1))
   document.getElementById("newInput").value = "";
-  document.getElementById("newQuantity").value = "";
-  document.getElementById("newPrice").value = "";
+  document.getElementById("newCell").value = "";
+  document.getElementById("newBirthdate").value = "";
 
   removeElement()
 }
