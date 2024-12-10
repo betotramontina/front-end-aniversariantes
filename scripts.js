@@ -10,7 +10,28 @@ const getList = async () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      data.contatos.forEach(item => insertList(item.nome, item.celular, item.data_nascimento))
+      // Ordena os contatos ignorando o ano (apenas mês e dia)
+      data.contatos.sort((a, b) => {
+        const [dayA, monthA] = a.data_nascimento.split('-').slice(0, 2); // extrai o dia e mês
+        const [dayB, monthB] = b.data_nascimento.split('-').slice(0, 2); // extrai o dia e mês
+
+        // Compara primeiro os meses, depois os dias
+        if (monthA === monthB) {
+          return dayA - dayB; // Se os meses forem iguais, compara os dias
+        } else {
+          return monthA - monthB; // Se os meses forem diferentes, compara os meses
+        }
+      });
+
+      // Exibe a lista ordenada com o formato 'DD-MM-AAAA' para o usuário
+      data.contatos.forEach(item => {
+        // Mantém o formato 'DD-MM-AAAA' para exibição
+        const [year, month, day] = item.data_nascimento.split('-');
+        const formattedDate = `${day}-${month}-${year}`;  // Formata para 'DD-MM-AAAA' (com o ano)
+
+        // Chama a função para inserir o item na interface
+        insertList(item.nome, item.celular, formattedDate);
+      });
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -107,23 +128,42 @@ const deleteItem = (item) => {
   --------------------------------------------------------------------------------------
 */
 const newItem = () => {
-  let inputContact = document.getElementById("newInput").value;
-  let inputCell = document.getElementById("newCell").value;
+  let inputContact = document.getElementById("newInput").value.trim(); // Remove espaços desnecessários
+  let inputCell = document.getElementById("newCell").value.trim();
   let inputBirthdate = document.getElementById("newBirthdate").value;
 
   // Validação para garantir que todos os campos estão preenchidos
   if (inputContact === '') {
-    alert("Escreva o nome de um item!");
+    alert("Informe o nome do contato");
+    return;
   } else if (inputCell === '') {
-    alert("Informe a quantidade!");
+    alert("Informe o whatsapp do contato");
+    return;
   } else if (inputBirthdate === '') {
-    alert("Informe o preço!");
-  } else {
-    // Se todos os campos estiverem preenchidos, insere o item e faz o POST
-    insertList(inputContact, inputCell, inputBirthdate);
-    postItem(inputContact, inputCell, inputBirthdate);
-    alert("Item adicionado!");
+    alert("Informe a data de nascimento do contato");
+    return;
   }
+
+  // Verifica se o nome já existe na tabela do front-end
+  let table = document.getElementById("myTable");
+  let rows = table.getElementsByTagName("tr");
+
+  for (let i = 0; i < rows.length; i++) {
+    let cell = rows[i].getElementsByTagName("td")[0]; // Coluna do nome
+    if (cell && cell.textContent.trim().toLowerCase() === inputContact.toLowerCase()) {
+      alert("Este nome já foi cadastrado!");
+      return;
+    }
+  }
+
+  // Usa a data diretamente no formato 'YYYY-MM-DD' para postItem e insertList
+  const formattedDate = inputBirthdate; // Mantém o formato original
+
+  // Insere no front-end e envia para o banco de dados
+  insertList(inputContact, inputCell, formattedDate); // Passa a data original
+  postItem(inputContact, inputCell, formattedDate);   // Passa a data original
+
+  alert("Item adicionado!");
 }
 
 /*
@@ -139,10 +179,24 @@ const searchItem = () => {
     method: 'get',
   })
     .then((response) => response.json())
-    .then((data) => 
-      {console.log(data)})
+    .then((data) => {
+      if (data && data.nome) {
+        // Limpa os resultados anteriores
+        const searchTableBody = document.getElementById("searchTableBody");
+        searchTableBody.innerHTML = "";
+
+        // Cria uma nova linha com os dados do contato
+        const row = searchTableBody.insertRow();
+        row.insertCell(0).textContent = data.nome;
+        row.insertCell(1).textContent = data.celular;
+        row.insertCell(2).textContent = data.data_nascimento;
+      } else {
+        alert("Contato não encontrado.");
+      }
+    })
     .catch((error) => {
       console.error('Error:', error);
+      alert("Erro ao buscar o contato.");
     });
 }
 
